@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>My Vacations</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="vacations$ | async as vacations">
+    <mat-table [dataSource]="vacations">
+      <ng-container matColumnDef="dates">
+        <mat-header-cell *matHeaderCellDef>vacations dates</mat-header-cell>
+        <mat-cell *matCellDef="let vacation"
+          >{{ vacation.startDate | date }} -
+          {{ vacation.endDate | date }}</mat-cell
+        >
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>description</mat-header-cell>
+        <mat-cell *matCellDef="let vacation">{{ vacation.comment }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>status</mat-header-cell>
+        <mat-cell *matCellDef="let vacation">
+          <ng-container *ngIf="vacation.status === 1">
+            <span class="text-info">Approved</span>
+          </ng-container>
+          <ng-container *ngIf="vacation.status === 2">
+            <span class="text-danger">Denied</span>
+          </ng-container>
+          <ng-container *ngIf="vacation.status === 0">
+            <span class="text-secondary">Pending</span>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="vacation balance">
+        <mat-header-cell *matHeaderCellDef>vacation balance</mat-header-cell>
+        <mat-cell *matCellDef="let vacation">
+          {{ vacation.dayRange }}</mat-cell
+        >
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>

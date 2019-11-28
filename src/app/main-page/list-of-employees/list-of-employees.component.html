@@ -1,0 +1,135 @@
+<ng-container *ngIf="dataSource.data; else elseTemplate">
+  <mat-card>
+    <mat-card-header class="d-flex justify-content-between">
+      <mat-card-title>
+        List of Employees
+      </mat-card-title>
+      <div>
+        <mat-form-field class="mr-2">
+          <input
+            matInput
+            type="text"
+            placeholder="Search"
+            [(ngModel)]="search"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field class="mr-2">
+          <mat-label>Status</mat-label>
+          <mat-select disableRipple [(ngModel)]="status">
+            <mat-option value="all">All</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="dismissed">Dismissed</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Sort by</mat-label>
+          <mat-select disableRipple [(ngModel)]="sort_by">
+            <mat-option (click)="sort('firstName')" value="firstName"
+              >Name</mat-option
+            >
+            <mat-option (click)="sort('surname')" value="surname"
+              >Last Name</mat-option
+            >
+            <mat-option (click)="sort('balance')" value="balance"
+              >Vacation Balance</mat-option
+            >
+            <mat-option (click)="sortTeam('name')" value="balance"
+              >Team Name</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-header>
+    <hr />
+    <mat-card-content>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell
+            *matHeaderCellDef
+            class="d-flex justify-content-between"
+          >
+            <div>name</div>
+            <div>phone number</div>
+            <div>work email</div>
+            <div>vacation balance</div>
+            <div>view/edit</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <mat-table
+              [dataSource]="
+                team.employees
+                  | filter
+                    : search
+                    : ['firstName', 'surname', 'workEmail', 'phone']
+                  | statusFilter: status
+              "
+            >
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef style="color: black">
+                  <mat-icon>bookmark_border</mat-icon> {{ team.name }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let profile">
+                  {{ profile.firstName }} {{ profile.surname }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="phone number">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let profile">
+                  {{ profile.phone }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="work email">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let profile">
+                  {{ profile.workEmail }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="vacation balance">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let profile">
+                  {{ profile.balance }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="view/edit">
+                <mat-header-cell *matHeaderCellDef>
+                  <a
+                    mat-flat-button
+                    [routerLink]="['/main/teams', team.id, 'edit']"
+                    ><mat-icon>edit</mat-icon></a
+                  >
+                </mat-header-cell>
+                <mat-cell *matCellDef="let profile">
+                  <a
+                    mat-flat-button
+                    [routerLink]="['/main', profile.id, 'edit']"
+                    ><mat-icon>edit</mat-icon></a
+                  >
+                </mat-cell>
+              </ng-container>
+              <mat-header-row
+                *matHeaderRowDef="profileColumns"
+              ></mat-header-row>
+              <mat-row *matRowDef="let row; columns: profileColumns"></mat-row>
+            </mat-table>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="teamColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: teamColumns"></mat-row>
+      </mat-table>
+      <mat-paginator
+        [pageSizeOptions]="[3, 6, 9]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<ng-template #elseTemplate>
+  <mat-spinner></mat-spinner>
+</ng-template>

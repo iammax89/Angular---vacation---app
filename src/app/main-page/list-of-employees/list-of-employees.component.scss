@@ -1,0 +1,35 @@
+.mat-card {
+  margin: 3%;
+  max-width: 952px;
+  mat-header-cell.justify-content-between {
+    padding-left: 24px;
+  }
+  .mat-cell {
+    display: block;
+    padding-right: 0px;
+    padding-top: 10px;
+  }
+  .mat-column-name {
+    padding-left: 0px;
+  }
+  .mat-column-vacation-balance {
+    display: flex;
+    justify-content: center;
+  }
+  .mat-column-view-edit {
+    padding-right: 0px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .mat-flat-button {
+    padding: 0px;
+  }
+}
+.mat-spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}

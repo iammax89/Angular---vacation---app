@@ -1,0 +1,59 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>My Profile</mat-card-title>
+    <a mat-flat-button [routerLink]="['/main', employee.id, 'edit']"
+      ><mat-icon>edit</mat-icon></a
+    >
+  </mat-card-header>
+  <hr />
+  <app-profile-card-avatar
+    [avatar]="employee.avatar"
+    [firstName]="employee.firstName"
+    [surname]="employee.surname"
+    [jobTitle]="employee.jobTitle"
+    [isActive]="employee.isActive"
+  ></app-profile-card-avatar>
+  <hr />
+  <mat-card-content>
+    <div>
+      <small>date of birth</small>
+      <p>{{ employee.birthdate | date }}</p>
+    </div>
+    <div>
+      <small>personal email</small>
+      <p>{{ employee.email }}</p>
+    </div>
+    <div>
+      <small>work email</small>
+      <p>{{ employee.workEmail }}</p>
+    </div>
+    <div>
+      <small>phone number</small>
+      <p>{{ employee.phone }}</p>
+    </div>
+    <div>
+      <small>skype</small>
+      <p>{{ employee.skype }}</p>
+    </div>
+    <div>
+      <small>hire date</small>
+      <p>{{ employee.workStartDate | date }}</p>
+    </div>
+    <ng-container *ngIf="employee.workEndDate">
+      <div>
+        <small>work end date</small>
+        <p>{{ employee.workEndDate | date }}</p>
+      </div>
+    </ng-container>
+    <div *ngIf="teamLeads">
+      <div *ngFor="let team of employee.teams">
+        <small>team name</small>
+        <p>{{ team.name }}</p>
+      </div>
+      <div *ngFor="let teamLead of teamLeads">
+        <small>team leader name</small>
+        <p>{{ teamLead.firstName }} {{ teamLead.surname }}</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

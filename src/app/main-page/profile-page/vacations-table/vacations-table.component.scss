@@ -1,0 +1,11 @@
+mat-card {
+  padding: 12px;
+  .mat-cell {
+    display: flex;
+    justify-self: center;
+  }
+  .mat-column-dates {
+    min-width: 200px;
+    padding: 0 10px;
+  }
+}

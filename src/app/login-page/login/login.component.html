@@ -1,0 +1,62 @@
+<form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-group col-12">
+    <mat-form-field class="col-12">
+      <input
+        matInput
+        type="email"
+        placeholder="Your email address"
+        class="full-width"
+        formControlName="email"
+      />
+      <mat-icon matSuffix>account_box</mat-icon>
+      <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">
+        <ng-container *ngIf="form.get('email').errors.required"
+          >Email is required.</ng-container
+        >
+        <ng-container *ngIf="form.get('email').errors.email"
+          >Please enter a valid email address.</ng-container
+        >
+      </mat-error>
+      <small class="text-danger" *ngIf="message"> {{ message }} </small>
+    </mat-form-field>
+  </div>
+  <div class="form-group col-12">
+    <mat-form-field class="col-12">
+      <input
+        matInput
+        type="password"
+        placeholder="Your password"
+        class="full-width"
+        formControlName="password"
+        [errorStateMatcher]="matcher"
+      />
+      <mat-icon matSuffix>vpn_key</mat-icon>
+      <mat-error
+        *ngIf="form.get('password').invalid && form.get('password').touched"
+      >
+        <ng-container *ngIf="form.get('password').errors.required">
+          Password is required.
+        </ng-container>
+        <ng-container *ngIf="form.get('password').errors.minlength">
+          Passwords must be at least
+          {{ form.get("password").errors.minlength.requiredLength }}
+          characters long. You have entered only
+          {{ form.get("password").errors.minlength.actualLength }}.
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group button-group col-12">
+    <button
+      [disabled]="form.invalid || submited"
+      type="submit"
+      mat-flat-button
+      color="primary"
+    >
+      Log In
+    </button>
+    <button mat-button color="primary" (click)="toPassReminder()">
+      Forgot your password ?
+    </button>
+  </div>
+</form>

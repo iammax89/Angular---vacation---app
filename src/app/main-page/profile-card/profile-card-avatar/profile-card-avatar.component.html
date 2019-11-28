@@ -1,0 +1,16 @@
+<mat-card-header>
+  <div
+    mat-card-avatar
+    [ngStyle]="{ 'background-image': 'url(&quot;' + avatar + '&quot;)' }"
+    class="ml-4"
+  ></div>
+
+  <mat-card-title>{{ firstName }} {{ surname }}</mat-card-title>
+  <mat-card-subtitle>{{ jobTitle }}</mat-card-subtitle>
+  <mat-card-subtitle *ngIf="isActive" class="text-info"
+    >Active</mat-card-subtitle
+  >
+  <mat-card-subtitle *ngIf="!isActive" class="text-secondary"
+    >Not active</mat-card-subtitle
+  >
+</mat-card-header>

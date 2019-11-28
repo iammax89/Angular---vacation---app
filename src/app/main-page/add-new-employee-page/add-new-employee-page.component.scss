@@ -1,0 +1,36 @@
+.mat-card {
+  margin: 3%;
+  max-width: 952px;
+  .form-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    justify-content: center;
+  }
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    button {
+      width: 120px;
+      outline: none;
+    }
+  }
+}
+.mat-spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+input[type="file"] {
+  display: none;
+}
+.avatar-prview {
+  padding: 10px;
+  img {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+  }
+}

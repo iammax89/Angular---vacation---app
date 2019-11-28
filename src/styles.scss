@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
+@import "~@ng-select/ng-select/themes/material.theme.css";

@@ -1,0 +1,125 @@
+<h2 mat-dialog-title>Vacation request</h2>
+<hr />
+<div mat-dialog-content>
+  <div class="d-flex mb-4">
+    <div class="d-flex flex-column">
+      <h3>{{ employee.firstName }} {{ employee.surname }}</h3>
+      <small>{{ employee.jobTitle }}</small>
+      <small
+        >{{ teamName }} -
+        {{ teamLeader }}
+      </small>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <div>
+      <div class="d-flex flex-column">
+        <small>comment</small>
+        <p>{{ vacation.comment }}</p>
+      </div>
+    </div>
+    <div class="d-flex flex-column">
+      <form [formGroup]="form" class="d-flex flex-column">
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="startDate"
+            placeholder="from"
+            formControlName="startDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="startDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="endDate"
+            placeholder="to"
+            formControlName="endDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="endDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
+        </mat-form-field>
+      </form>
+      <div>
+        <small>amount</small>
+        <p
+          [ngClass]="{
+            'text-info': vacationRange <= employee.balance,
+            'text-danger': vacationRange > employee.balance
+          }"
+          style="margin-bottom: 0px"
+        >
+          {{ vacationRange }} days in vacation
+        </p>
+        <ng-container *ngIf="vacationRange > employee.balance">
+          <small class="text-danger">vacation duration exceeds </small>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <ng-container [ngSwitch]="vacation.status">
+    <div *ngSwitchCase="1">
+      <div>
+        <div mat-dialog-actions class="d-flex justify-content-around">
+          <button mat-button disabled style="border: #C8C8C8 1px solid;">
+            <mat-icon>check_circle_outline</mat-icon>
+            Approved by {{ vacation.approver.firstName }}
+            {{ vacation.approver.surname }}
+          </button>
+          <button mat-stroked-button (click)="onNoClick()">Close</button>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchCase="2">
+      <div>
+        <div mat-dialog-actions class="d-flex justify-content-around">
+          <button mat-button disabled style="border: #C8C8C8 1px solid;">
+            <mat-icon>highlight_off</mat-icon>
+            Denied by {{ vacation.approver.firstName }}
+            {{ vacation.approver.surname }}
+          </button>
+          <button mat-stroked-button (click)="onNoClick()">Close</button>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchDefault>
+      <div>
+        <p>Answer the Request</p>
+        <div>
+          <mat-radio-group [(ngModel)]="status" class="mb-2">
+            <mat-radio-button value="1" class="mr-4">Approve</mat-radio-button>
+            <mat-radio-button value="2">Refuse</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div>
+          <textarea
+            [(ngModel)]="approverComment"
+            rows="3"
+            matInput
+            placeholder="Approver Comment"
+          ></textarea>
+        </div>
+      </div>
+      <hr />
+      <div mat-dialog-actions class="d-flex justify-content-around">
+        <button mat-stroked-button (click)="onNoClick()">Cancel</button>
+        <button
+          mat-flat-button
+          color="primary"
+          [mat-dialog-close]="data.request"
+          (click)="onAnswerRequest()"
+        >
+          Answer
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>

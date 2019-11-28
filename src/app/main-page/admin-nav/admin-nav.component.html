@@ -1,0 +1,97 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    #sidenav
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['employee']"
+        ><mat-icon>person_add</mat-icon>&nbsp;Add New Employee</a
+      >
+      <a mat-list-item [routerLink]="['team']"
+        ><mat-icon>group_add</mat-icon>&nbsp;Add New Team</a
+      >
+      <a mat-list-item [routerLink]="['requests']"
+        ><mat-icon
+          [matBadge]="(vacationsPending$ | async)?.length"
+          matBadgeColor="accent"
+          >list</mat-icon
+        >&nbsp;Vacation Requests</a
+      >
+      <a mat-list-item [routerLink]="['calendar']"
+        ><mat-icon>calendar_today</mat-icon>&nbsp;Team Calendar</a
+      >
+      <a mat-list-item [routerLink]="['employees']"
+        ><mat-icon>person</mat-icon>&nbsp;List Of Employees</a
+      >
+      <a mat-list-item [routerLink]="['teams']"
+        ><mat-icon>people_alt</mat-icon>&nbsp;List Of Teams</a
+      >
+      <ng-container *ngIf="isHandset$ | async">
+        <hr />
+        <a mat-list-item [routerLink]="['/main', id]"
+          ><mat-icon>account_circle</mat-icon>&nbsp; My Profile</a
+        >
+        <a mat-list-item [routerLink]="['/main', id, 'request']">
+          <mat-icon>beach_access</mat-icon>&nbsp; Request Vacations</a
+        >
+        <a mat-list-item [routerLink]="[id, 'edit']">
+          <mat-icon>edit</mat-icon>&nbsp; Edit Profile</a
+        >
+        <a mat-list-item (click)="logOut()">
+          <mat-icon>exit_to_app</mat-icon>&nbsp; Log Out</a
+        >
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <ng-container *ngIf="isHandset$ | async">
+        <button
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="sidenav.toggle()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      </ng-container>
+      <div>
+        <span
+          style="font-family:Muli-Bold; text-transform: uppercase;
+        text-align: center;"
+        >
+          <img
+            src="../../assets/img/logo softheme_white.svg"
+            width="10%"
+            height="10%"
+            alt="logo"
+            class="mr-1 "
+          />
+          Softheme Vacations
+        </span>
+      </div>
+      <ng-container class="toolbar-menu" *ngIf="(isHandset$ | async) === false">
+        <button mat-button [routerLink]="['/main', id]">My Profile</button>
+        <button mat-button [routerLink]="['/main', id, 'request']">
+          Request Vacations
+        </button>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>account_circle</mat-icon>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="[id, 'edit']">
+            <mat-icon>edit</mat-icon>Edit Profile
+          </button>
+          <button mat-menu-item (click)="logOut()">
+            <mat-icon>exit_to_app</mat-icon>Log Out
+          </button>
+        </mat-menu>
+      </ng-container>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

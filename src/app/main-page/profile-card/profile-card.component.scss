@@ -1,0 +1,17 @@
+mat-card {
+  width: 341px;
+  padding: 8px;
+  mat-card-header{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+  mat-card-content {
+    display: grid;
+    justify-content: left;
+    padding-left: 10%;
+    p{
+      margin-bottom: 10px;
+    }
+  }
+}

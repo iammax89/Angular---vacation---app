@@ -1,0 +1,293 @@
+<ng-container *ngIf="teams$ | async as teams; else loading">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Add New Employee</mat-card-title>
+    </mat-card-header>
+    <hr />
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-container">
+          <div>
+            <div class="m-2">
+              <div>
+                <button
+                  type="button"
+                  mat-fab
+                  class="mr-4"
+                  style="outline: none;"
+                  (click)="filePicker.click($event)"
+                >
+                  <mat-icon>perm_identity</mat-icon>
+                </button>
+                <input
+                  type="file"
+                  #filePicker
+                  (change)="onAvatarPicked($event)"
+                />
+                <span class="text-secondary">Edit Photo</span>
+              </div>
+              <div
+                class="avatar-prview"
+                *ngIf="
+                  avatarPreview &&
+                  avatarPreview !== '' &&
+                  form.get('avatar').valid
+                "
+              >
+                <img [src]="avatarPreview" [alt]="avatar" />
+              </div>
+            </div>
+            <mat-form-field
+              ><input matInput formControlName="firstName" placeholder="Name" />
+              <mat-error
+                *ngIf="
+                  form.get('firstName').invalid &&
+                  form.get('firstName').touched &&
+                  form.get('firstName').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              ><input
+                matInput
+                formControlName="surname"
+                placeholder="Last Name"
+              />
+              <mat-error
+                *ngIf="
+                  form.get('surname').invalid &&
+                  form.get('surname').touched &&
+                  form.get('surname').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Position" formControlName="jobTitle">
+                <mat-option value="Account Manager">Account Manager</mat-option>
+                <mat-option value="Team Leader">Team Leader</mat-option>
+                <mat-option value="Developer">Developer</mat-option>
+                <mat-option value="Administrator">Administrator</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  form.get('jobTitle').invalid &&
+                  form.get('jobTitle').touched &&
+                  form.get('jobTitle').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Status" formControlName="isActive">
+                <mat-option [value]="true">Active</mat-option>
+                <mat-option [value]="false">Not Active</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  form.get('isActive').invalid &&
+                  form.get('isActive').touched &&
+                  form.get('isActive').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Balance" formControlName="balance">
+                <mat-option *ngFor="let day of balance" [value]="day">{{
+                  day
+                }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  form.get('balance').invalid &&
+                  form.get('balance').touched &&
+                  form.get('balance').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="birthdate"
+                placeholder="Date Of Birth"
+                formControlName="birthdate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="birthdate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #birthdate></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  form.get('birthdate').invalid &&
+                  form.get('birthdate').touched &&
+                  form.get('birthdate').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              ><input
+                matInput
+                placeholder="Personal Email"
+                formControlName="email"
+              />
+              <mat-error
+                *ngIf="form.get('email').invalid && form.get('email').touched"
+              >
+                <ng-container *ngIf="form.get('email').errors.required"
+                  >This field is required.</ng-container
+                >
+                <ng-container *ngIf="form.get('email').errors.email"
+                  >Please enter a valid email address.</ng-container
+                >
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              ><input
+                matInput
+                placeholder="Work Email"
+                formControlName="workEmail"
+              />
+              <mat-error
+                *ngIf="
+                  form.get('workEmail').invalid && form.get('workEmail').touched
+                "
+              >
+                <ng-container *ngIf="form.get('workEmail').errors.required"
+                  >This field is required.</ng-container
+                >
+                <ng-container *ngIf="form.get('workEmail').errors.email"
+                  >Please enter a valid email address.</ng-container
+                >
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              ><input
+                matInput
+                placeholder="Phone Number"
+                formControlName="phone"
+              />
+              <mat-error
+                *ngIf="
+                  form.get('phone').invalid &&
+                  form.get('phone').touched &&
+                  form.get('phone').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              ><input matInput placeholder="Skype" formControlName="skype" />
+              <mat-error
+                *ngIf="
+                  form.get('skype').invalid &&
+                  form.get('skype').touched &&
+                  form.get('skype').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="workStartDate"
+                placeholder="Work Start Date "
+                formControlName="workStartDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="workStartDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #workStartDate></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  form.get('workStartDate').invalid &&
+                  form.get('workStartDate').touched &&
+                  form.get('workStartDate').errors.required
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="workEndDate"
+                placeholder="Work End Date "
+                formControlName="workEndDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="workEndDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #workEndDate></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  form.get('workEndDate').invalid &&
+                  form.get('workEndDate').touched
+                "
+              >
+                This field is required.
+              </mat-error>
+            </mat-form-field>
+            <p>
+              <mat-checkbox formControlName="teamMemebership"
+                >Team Membership</mat-checkbox
+              >
+            </p>
+            <mat-form-field>
+              <mat-select placeholder="Team Name" formControlName="teams">
+                <mat-option *ngFor="let team of teams" [value]="team">{{
+                  team.name
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <ng-container
+              *ngIf="
+                form.get('teamMemebership').value && form.get('teams').value
+              "
+            >
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Team Leader"
+                  [value]="form.get('teams').value.teamLeadName"
+                />
+              </mat-form-field>
+            </ng-container>
+          </div>
+        </div>
+        <div class="button-container">
+          <button mat-stroked-button [routerLink]="['..']">Cancel</button>
+          <button
+            type="submit"
+            mat-flat-button
+            color="primary"
+            [disabled]="form.invalid"
+          >
+            Done
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

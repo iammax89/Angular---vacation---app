@@ -1,0 +1,16 @@
+<div class="content">
+  <ng-container *ngIf="employee$ | async as employee; else loading">
+    <app-profile-card [employee]="employee"></app-profile-card>
+    <div class="content-inner">
+      <app-days-avaliable-dashboard
+        [employee]="employee"
+      ></app-days-avaliable-dashboard>
+      <app-vacation-request-form
+        [employee]="employee"
+      ></app-vacation-request-form>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+</div>

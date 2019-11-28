@@ -1,0 +1,12 @@
+form {
+  @media (min-width: 769px) {
+    display: grid;
+    grid-template-columns: repeat(2, 220px);
+    justify-items: center;
+  }
+  button {
+    outline: none;
+    width: 60%;
+    margin-bottom: 5px;
+  }
+}

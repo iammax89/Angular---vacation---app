@@ -1,0 +1,55 @@
+<ng-container *ngIf="dataSource.data; else elseTemplate">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>List of Teams</mat-card-title>
+    </mat-card-header>
+    <hr />
+    <mat-card-content>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="team name">
+          <mat-header-cell *matHeaderCellDef> Team Name </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            {{ team.name }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="team leader">
+          <mat-header-cell *matHeaderCellDef> Team Leader </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            {{ team.teamLeadName }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="amount of employees">
+          <mat-header-cell *matHeaderCellDef>
+            Amount of Employees
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            {{ team.employeeCount }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="view/edit">
+          <mat-header-cell *matHeaderCellDef>
+            View / Edit
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <a mat-flat-button [routerLink]="['/main/teams', team.id, 'edit']"
+              ><mat-icon>edit</mat-icon></a
+            >
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<ng-template #elseTemplate>
+  <mat-spinner></mat-spinner>
+</ng-template>

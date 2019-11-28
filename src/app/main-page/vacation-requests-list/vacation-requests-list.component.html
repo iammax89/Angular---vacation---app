@@ -1,0 +1,71 @@
+<ng-container *ngIf="dataSource.data; else elseTemplate">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>List of Vacation Requests</mat-card-title>
+    </mat-card-header>
+    <hr />
+    <mat-card-content>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> name </mat-header-cell>
+          <mat-cell *matCellDef="let vacation">
+            {{ vacation.name }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="team">
+          <mat-header-cell *matHeaderCellDef> team </mat-header-cell>
+          <mat-cell *matCellDef="let vacation">
+            {{ vacation.team }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="vacation dates">
+          <mat-header-cell *matHeaderCellDef> vacation dates </mat-header-cell>
+          <mat-cell *matCellDef="let vacation">
+            {{ vacation.startDate | date }} -
+            {{ vacation.endDate | date }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="amount of days">
+          <mat-header-cell *matHeaderCellDef> amount of days </mat-header-cell>
+          <mat-cell *matCellDef="let vacation">
+            {{ vacation.amount }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="vacation balance">
+          <mat-header-cell *matHeaderCellDef>
+            vacation balance
+          </mat-header-cell>
+          <mat-cell *matCellDef="let vacation">
+            {{ vacation.balance }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let vacation">
+            <div
+              class="status"
+              [ngClass]="{
+                approved: vacation.status === 1,
+                pending: vacation.status === 0,
+                denied: vacation.status === 2
+              }"
+            ></div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+          (click)="openDialog(row)"
+          *matRowDef="let row; columns: displayedColumns"
+        ></mat-row>
+      </mat-table>
+      <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<ng-template #elseTemplate>
+  <mat-spinner></mat-spinner>
+</ng-template>

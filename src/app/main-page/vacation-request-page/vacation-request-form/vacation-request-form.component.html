@@ -1,0 +1,92 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Vacation request</mat-card-title>
+  </mat-card-header>
+  <hr />
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <mat-form-field>
+          <textarea
+            formControlName="comment"
+            matInput
+            rows="1"
+            placeholder="Comment"
+          ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="startDate"
+            placeholder="from"
+            formControlName="startDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="startDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+          <mat-error
+            *ngIf="
+              form.get('startDate').invalid &&
+              form.get('startDate').touched &&
+              form.get('startDate').errors.required
+            "
+            >Please pick when your vacation begins.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="endDate"
+            placeholder="to"
+            formControlName="endDate"
+            (change)="vacationDaysFif($event)"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="endDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
+          <mat-error
+            *ngIf="
+              form.get('endDate').invalid &&
+              form.get('endDate').touched &&
+              form.get('endDate').errors.required
+            "
+            >Please pick when your vacation ends.
+          </mat-error>
+        </mat-form-field>
+        <div *ngIf="vacationRange > 0">
+          <small>amount</small>
+          <p
+            [ngClass]="{
+              'text-info': vacationRange <= daysleft,
+              'text-danger': vacationRange > daysleft
+            }"
+            style="margin-bottom: 0px"
+          >
+            {{ vacationRange }} days in vacation
+          </p>
+          <ng-container *ngIf="vacationRange > daysleft">
+            <small class="text-danger">vacation duration exceeds </small>
+          </ng-container>
+        </div>
+      </div>
+      <button [routerLink]="['/main', employee.id]" mat-stroked-button>
+        Cansel
+      </button>
+      <button
+        [disabled]="form.invalid"
+        type="submit"
+        mat-flat-button
+        color="primary"
+      >
+        Send Request
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-header>
+    <ng-select
+      [searchable]="false"
+      [clearable]="false"
+      [items]="teams$ | async"
+      bindLabel="name"
+      (change)="selectVacationsForTeam($event)"
+    ></ng-select>
+  </mat-card-header>
+  <mat-card-content>
+    <full-calendar
+      defaultView="dayGridMonth"
+      [plugins]="calendarPlugins"
+      [events]="calendarEvents"
+      #calendar
+    ></full-calendar>
+  </mat-card-content>
+</mat-card>

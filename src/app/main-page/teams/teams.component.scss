@@ -1,0 +1,20 @@
+.mat-spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+.mat-card {
+  margin: 3%;
+  max-width: 952px;
+  .mat-column-view-edit {
+    display: flex;
+    justify-content: center;
+  }
+  .mat-column-amount-of-employees {
+    display: flex;
+    justify-content: center;
+  }
+}
